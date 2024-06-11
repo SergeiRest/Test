@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Leopotam.Ecs;
+using Scripts.Items.Items;
 using UnityEngine;
 
 namespace Scripts.Items
@@ -9,6 +10,7 @@ namespace Scripts.Items
         private readonly EcsFilter<ItemsStorage, FillingComponent, AddItemComponent> _filter = null;
         
         private ItemsData.ItemsData _itemsData;
+        private readonly EcsWorld _world = null;
         
         public void Run()
         {
@@ -27,6 +29,11 @@ namespace Scripts.Items
                 var obj = Object.Instantiate(prefab);
                 itemsStorage.SetItem(obj);
                 
+                var ecsEntity = _world.NewEntity();
+                ref var item = ref ecsEntity.Get<Item>();
+                item.Transform = obj.transform;
+                item.ParentIndex = itemsStorage.Index;
+
                 entity.Del<AddItemComponent>();
 
                 if (itemsStorage.Transforms.Count(point => point.childCount == 0) == 0)

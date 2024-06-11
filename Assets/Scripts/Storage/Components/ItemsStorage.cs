@@ -6,6 +6,7 @@ namespace Scripts.Items
     [System.Serializable]
     public struct ItemsStorage
     {
+        public string Index;
         public string key;
         public Transform[] Transforms;
 

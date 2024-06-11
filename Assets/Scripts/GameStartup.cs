@@ -3,6 +3,7 @@ using Scripts.Items;
 using Scripts.Items.ItemsData;
 using Scripts.Joysitck.Components;
 using Scripts.Joysitck.Systems;
+using Scripts.Player.Systems;
 using UnityEngine;
 using Voody.UniLeo;
 
@@ -44,9 +45,15 @@ namespace Scripts
                 #region Joystick
 
                 .Add(new JoystickHandlePositionCalculator())
-                .Add(new JoystickViewUpdate());
+                .Add(new JoystickViewUpdate())
 
-            #endregion
+                #endregion
+
+                #region Player
+                .Add(new UpdateDirectionSystem())
+                .Add(new PlayerMovementSystem());
+
+                #endregion
         }
 
         private void AddInjections()
