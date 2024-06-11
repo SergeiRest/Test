@@ -1,6 +1,8 @@
 ﻿using Leopotam.Ecs;
 using Scripts.Items;
 using Scripts.Items.ItemsData;
+using Scripts.Joysitck.Components;
+using Scripts.Joysitck.Systems;
 using UnityEngine;
 using Voody.UniLeo;
 
@@ -22,6 +24,7 @@ namespace Scripts
             
             AddInjections();
             AddSystems();
+            AddOneFrames();
             
             _systems.Init();
         }
@@ -36,9 +39,16 @@ namespace Scripts
             _systems
                 .Add(new StorageSlotsChecker())
                 .Add(new FillTimer())
-                .Add(new AddItemSystem());
+                .Add(new AddItemSystem())
+
+                #region Joystick
+
+                .Add(new JoystickHandlePositionCalculator())
+                .Add(new JoystickViewUpdate());
+
+            #endregion
         }
-        
+
         private void AddInjections()
         {
             _systems
@@ -47,6 +57,11 @@ namespace Scripts
 
         private void AddOneFrames()
         {
+            _systems
+                .OneFrame<PointerDownSignal>()
+                .OneFrame<PointerUpSignal>()
+                .OneFrame<DragSignal>()
+                .OneFrame<UpdateAfterDrag>();
         }
     }
 }
