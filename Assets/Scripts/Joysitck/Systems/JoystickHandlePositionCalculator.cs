@@ -34,7 +34,6 @@ namespace Scripts.Joysitck.Systems
                 {
                     Position = _input * radius * _handleRange
                 };
-                //handle.anchoredPosition = _input * radius * handleRange;
             }
         }
         

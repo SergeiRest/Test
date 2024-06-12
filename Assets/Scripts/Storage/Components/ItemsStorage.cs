@@ -17,5 +17,7 @@ namespace Scripts.Items
             go.transform.localPosition = Vector3.zero;
             go.transform.localScale = Vector3.one;
         }
+
+        public string GetEmptySlot() => Transforms.First(transform => transform.childCount == 0).name;
     }
 }

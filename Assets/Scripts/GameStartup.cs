@@ -1,6 +1,8 @@
 ﻿using Leopotam.Ecs;
+using Scripts.EntityReference.Systems;
 using Scripts.Items;
 using Scripts.Items.ItemsData;
+using Scripts.Items.Systems;
 using Scripts.Joysitck.Components;
 using Scripts.Joysitck.Systems;
 using Scripts.Player.Systems;
@@ -38,6 +40,9 @@ namespace Scripts
         private void AddSystems()
         {
             _systems
+
+                .Add(new EntityReferenceInitializerSystem())
+
                 .Add(new StorageSlotsChecker())
                 .Add(new FillTimer())
                 .Add(new AddItemSystem())
@@ -50,10 +55,15 @@ namespace Scripts
                 #endregion
 
                 #region Player
+
                 .Add(new UpdateDirectionSystem())
-                .Add(new PlayerMovementSystem());
+                .Add(new PlayerMovementSystem())
+                .Add(new PlayerRotationSystem())
 
                 #endregion
+
+                .Add(new GiveItemSystem())
+                .Add(new ItemMoveToStackSystem());
         }
 
         private void AddInjections()

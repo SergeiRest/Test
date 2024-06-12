@@ -23,8 +23,11 @@ namespace Scripts.Items
                 
                 ref ItemsStorage itemsStorage = ref _filter.Get1(i);
 
-                string key = itemsStorage.key;
-                var prefab = _itemsData.Items.First(item => item.Key == key).ItemPrefab;
+                string itemKey = itemsStorage.key;
+                string slotKey = itemsStorage.GetEmptySlot();
+                string index = itemsStorage.Index;
+                
+                var prefab = _itemsData.Items.First(item => item.Key == itemKey).ItemPrefab;
                 
                 var obj = Object.Instantiate(prefab);
                 itemsStorage.SetItem(obj);
@@ -32,7 +35,10 @@ namespace Scripts.Items
                 var ecsEntity = _world.NewEntity();
                 ref var item = ref ecsEntity.Get<Item>();
                 item.Transform = obj.transform;
-                item.ParentIndex = itemsStorage.Index;
+
+                ref var itemInStorageComponent = ref ecsEntity.Get<ItemInStorage>();
+                itemInStorageComponent.StorageIndex = index;
+                itemInStorageComponent.SlotIndex = slotKey;
 
                 entity.Del<AddItemComponent>();
 
