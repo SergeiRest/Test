@@ -1,4 +1,6 @@
 ﻿using Leopotam.Ecs;
+using Scripts.ContainerToItems.Systems;
+using Scripts.Data;
 using Scripts.EntityReference.Systems;
 using Scripts.Items;
 using Scripts.Items.ItemsData;
@@ -14,6 +16,7 @@ namespace Scripts
     public class GameStartup : MonoBehaviour
     {
         [SerializeField] private ItemsData _itemsData;
+        [SerializeField] private ItemMovingData _itemMovingData;
         
         private EcsWorld _world;
         private EcsSystems _systems;
@@ -59,17 +62,25 @@ namespace Scripts
                 .Add(new UpdateDirectionSystem())
                 .Add(new PlayerMovementSystem())
                 .Add(new PlayerRotationSystem())
+                .Add(new PlayerMoveAnimationSystem())
 
                 #endregion
 
+                #region Items
+
                 .Add(new GiveItemSystem())
-                .Add(new ItemMoveToStackSystem());
+                .Add(new SetItemInContainer())
+                .Add(new ItemMoverToStackSystem())
+                .Add(new ItemMoverToContainer());
+
+                #endregion
         }
 
         private void AddInjections()
         {
             _systems
-                .Inject(_itemsData);
+                .Inject(_itemsData)
+                .Inject(_itemMovingData);
         }
 
         private void AddOneFrames()

@@ -21,7 +21,7 @@ namespace Scripts.Items
                 {
                     entity.Get<FillingComponent>() = new FillingComponent()
                     {
-                        MaxTime = 3,
+                        MaxTime = 1,
                         CurrentTime = 0
                     };
                 }

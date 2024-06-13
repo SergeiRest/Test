@@ -15,6 +15,19 @@ namespace Scripts.Player.Components
             transform.SetParent(emptyPoint);
         }
 
+        public string GetLast()
+        {
+            try
+            {
+                return Points.Last(point => point.childCount > 0).name;
+            }
+            catch (Exception e)
+            {
+                return "";
+                //throw new Exception("A");
+            }
+        }
+
         public bool HasEmptyPoints()
         {
             try
